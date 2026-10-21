@@ -1,1 +1,2 @@
-# nmf_ot_mutsig
+# Nonnegative matrix factorization with Wasserstein distance 
+
