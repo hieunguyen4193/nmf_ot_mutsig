@@ -1,0 +1,23 @@
+{
+  "W_FLANK": 1.0,
+  "W5": 1.0,
+  "W3": 1.0,
+  "FLANK_TV": 1.25,
+  "CPG_FACTOR": 1.5,
+  "W_SUB": 2.0,
+  "LAMBDA": 0.5,
+  "MIN_SBS": 100,
+  "K_EXTRA": 0,
+  "EXTRA_BASE": 3.0,
+  "SUB_EDGES": {
+    "C>A--C>G": 1.0,
+    "T>A--T>G": 1.0,
+    "C>A--C>T": 1.5,
+    "C>G--C>T": 1.5,
+    "T>A--T>C": 1.5,
+    "T>G--T>C": 1.5,
+    "C>A--T>A": 2.0,
+    "C>G--T>G": 2.0,
+    "C>T--T>C": 2.0
+  }
+}
