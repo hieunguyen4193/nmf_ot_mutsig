@@ -1,0 +1,1 @@
+conda create -y -n wdl -c conda-forge python=3.11 numpy scipy matplotlib jupyter nbconvert ipykernel octave pytorch

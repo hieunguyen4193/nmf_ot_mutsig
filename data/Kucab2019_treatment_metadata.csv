@@ -1,0 +1,114 @@
+Sample.Name,Compound,Concentration,S9.mix,Compound.Abbreviation,Group,Treatment,subclone_num,profile_SNR,pvalue,P_adjust,min_simi,max_simi,has_signature_SNRge2
+MSM0.10,Melphalan,1.5 uM,No,Melphalan,l_Drug Therapy,Melphalan (1.5 uM),3,2.9461520116373,0.0466,0.1,0.253180875341612,0.337366275451712,True
+MSM0.100,"2,6-Dimethylaniline",3.8 mM,No,"2,6-Dimethylaniline",j_Aromatic Amine,"2,6-Dimethylaniline (3.8 mM)",2,1.83440685036091,0.6788,0.81,0.0898521802225788,0.0898521802225788,False
+MSM0.101,Cyclophosphamide,60 uM,Yes,Cyclophosphamide,l_Drug Therapy,Cyclophosphamide (60 uM) + S9,2,2.27207501540192,0.7741,0.86,0.247952405917888,0.247952405917888,True
+MSM0.102,Potassium bromate,875 uM,No,Potassium bromate,d_ROS/NOS,Potassium bromate (875 uM),3,6.47944960927657,0.0,0.0,0.946247827958154,0.97145072567203,True
+MSM0.103,"Dibenz[a,h]anthracene diol-epoxide",0.109 uM,No,DBADE,f_PAH,DBADE (0.109 uM),3,36.2251645101666,0.0,0.0,0.992206698156145,0.994934869734935,True
+MSM0.104,Formaldehyde,120 uM,No,Formaldehyde,n_Aldehydes,Formaldehyde (120 uM),3,2.21929562102848,0.0029,0.01,0.121912705778823,0.260969840745381,True
+MSM0.105,Acetaldehyde,12 mM,No,Acetaldehyde,n_Aldehydes,Acetaldehyde (12 mM),2,2.28460171879669,0.1632,0.3,0.228889387155675,0.228889387155675,True
+MSM0.106,Semustine (methyl-CCNU),150 uM,No,Semustine,l_Drug Therapy,Semustine (150 uM),3,2.52878536913335,0.0055,0.01,0.0698949796199487,0.636030038283366,True
+MSM0.107,"2,6-Dimethylaniline",11 mM,Yes,"2,6-Dimethylaniline",j_Aromatic Amine,"2,6-Dimethylaniline (11 mM) + S9",2,1.78203616284855,0.6639,0.81,0.0101595795406131,0.0101595795406131,False
+MSM0.108,N-Methyl-N'-nitro-nitrosoguanidine,0.75 uM,No,MNNG,m_Alkylating Agent,MNNG (0.75 uM),2,1.59328270708341,0.6978,0.81,0.0,0.0,False
+MSM0.109,Peroxynitrite,30 uM,No,Peroxynitrite,d_ROS/NOS,Peroxynitrite (30 uM),2,1.44878915466948,0.4447,0.63,0.117274464305705,0.117274464305705,False
+MSM0.11,Temozolomide,200 uM,No,Temozolomide,l_Drug Therapy,Temozolomide (200 uM),3,13.0331843248213,0.0,0.0,0.89660198775034,0.946810452131803,True
+MSM0.110,"1,2-Dimethylhydrazine",11.6 mM,Yes,DMH,m_Alkylating Agent,DMH (11.6 mM) + S9,3,9.32024214588872,0.0,0.0,0.762479514542076,0.940424934495871,True
+MSM0.111,Benzidine,200 uM,No,Benzidine,j_Aromatic Amine,Benzidine (200 uM),3,4.01738712022906,0.0,0.0,0.614544726301611,0.859721958426528,True
+MSM0.112,Benzidine,900 uM,Yes,Benzidine,j_Aromatic Amine,Benzidine (900 uM) + S9,3,1.87208979402542,0.1252,0.24,0.124949635165568,0.307395258623635,False
+MSM0.113,2-Naphthylamine,400 uM,Yes,2-Naphthylamine,j_Aromatic Amine,2-Naphthylamine (400 uM) + S9,2,1.19290739986881,0.5416,0.71,0.0651022621261486,0.0651022621261486,False
+MSM0.114,2-Naphthylamine,200 uM,Yes,2-Naphthylamine,j_Aromatic Amine,2-Naphthylamine (200 uM) + HS9,3,1.40122211331849,0.9126,0.95,0.0,0.0760715844793126,False
+MSM0.115,"4,4'-Methylene(2-chloroaniline)",5 uM,No,MOCA,j_Aromatic Amine,MOCA (5 uM),2,1.99308097149949,0.4879,0.68,0.0098053550562629,0.0098053550562629,False
+MSM0.116,"4,4'-Methylene(2-chloroaniline)",37.5 uM,Yes,MOCA,j_Aromatic Amine,MOCA (37.5 uM) + S9,3,1.56171475445393,0.4077,0.61,0.0,0.422814807331765,False
+MSM0.117,3-Chloro-4-(dichloromethyl)-5-hydroxy-2(5H)-furanone,2.5 uM,No,MX,b_Other,MX (2.5 uM),2,1.59654509834807,0.6978,0.81,0.0,0.0,False
+MSM0.12,"Dibenzo[a,l]pyrene",0.0039 uM,No,DBP,f_PAH,DBP (0.0039 uM),3,3.19175187323211,0.005,0.01,0.317530835560763,0.362708729770873,True
+MSM0.121,2-Naphthylamine,200 uM,No,2-Naphthylamine,j_Aromatic Amine,2-Naphthylamine (200 uM),3,1.34175102664751,0.3262,0.52,0.0,0.279659652575366,False
+MSM0.122,3-Chloro-4-(dichloromethyl)-5-hydroxy-2(5H)-furanone,7 uM,Yes,MX,b_Other,MX (7 uM) + S9,3,3.68699040865041,0.0,0.0,0.596448708940795,0.834489100575778,True
+MSM0.123,Semustine (methyl-CCNU),700 uM,Yes,Semustine,l_Drug Therapy,Semustine (700 uM) + S9,3,2.03271779094367,0.1062,0.21,0.123397352733139,0.231973338444682,True
+MSM0.124,Methyleugenol,1.25 mM,No,Methyleugenol,b_Other,Methyleugenol (1.25 mM),3,2.5841005228755,0.0,0.0,0.427831775017931,0.804859941532634,True
+MSM0.125,Methyleugenol,1.9 mM,Yes,Methyleugenol,b_Other,Methyleugenol (1.9 mM) + S9,3,1.28855020313126,0.2021,0.34,0.0,0.0,False
+MSM0.126,4-Aminobiphenyl,300 uM,Yes,4-ABP,j_Aromatic Amine,4-ABP (300 uM) + S9,2,4.49428091003134,0.0,0.0,0.437561537854409,0.437561537854409,True
+MSM0.13,"Dibenzo[a,l]pyrene diol-epoxide",0.000156 uM,No,DBPDE,f_PAH,DBPDE (0.000156 uM),3,5.52803873480888,0.0,0.0,0.810355462181744,0.898941365654313,True
+MSM0.130,"7H-Dibenzo[c,g]carbazole",1.5 uM,No,DBC,f_PAH,DBC (1.5 uM),3,1.76144665682624,0.5852,0.76,0.0,0.342302684797511,False
+MSM0.132,"Dibenzo[a,l]pyrene",0.0313 uM,Yes,DBP,f_PAH,DBP (0.0313 uM) + S9,3,4.34848447938163,0.0,0.0,0.809704405675477,0.910351723379913,True
+MSM0.14,"Dibenz[a,h]anthracene diol-epoxide",0.0313 uM,No,DBADE,f_PAH,DBADE (0.0313 uM),3,16.5845069733874,0.0,0.0,0.98440188275299,0.991833652994208,True
+MSM0.15,Mitomycin C,0.313 uM,No,Mitomycin C,l_Drug Therapy,Mitomycin C (0.313 uM),3,2.37265444424673,0.8867,0.95,0.288713404391847,0.746493087474674,True
+MSM0.16,"1,8-Dinitropyrene",0.125 uM,No,"1,8-DNP",e_Nitro-PAH,"1,8-DNP (0.125 uM)",3,6.32091903438057,0.0,0.0,0.779200349263505,0.807273161122173,True
+MSM0.17,2-Nitrofluorene,10 uM,No,2-Nitrofluorene,e_Nitro-PAH,2-Nitrofluorene (10 uM),2,1.21521852439582,0.1851,0.32,0.0438012328497722,0.0438012328497722,False
+MSM0.18,Etoposide,0.0188 uM,No,Etoposide,l_Drug Therapy,Etoposide (0.0188 uM),2,1.86955302395104,0.6978,0.81,0.0161813526714806,0.0161813526714806,False
+MSM0.19,Hydrogen peroxide,24.5 uM,No,H2O2,d_ROS/NOS,H2O2 (24.5 uM),2,1.44065977583947,0.6978,0.81,0.0,0.0,False
+MSM0.2,Benzo[a]pyrene diol-epoxide,0.125 uM,No,BPDE,f_PAH,BPDE (0.125 uM),3,8.26028927087815,0.0,0.0,0.987962408883782,0.99378318225767,True
+MSM0.20,Cadmium chloride,2.5 uM,No,CdCl2,c_Metal Salts,Cadmium chloride (2.5 uM),2,1.8995381442206,0.6472,0.81,0.413581188406997,0.413581188406997,False
+MSM0.21,Sodium (meta) arsenite,2 uM,No,NaAsO2,c_Metal Salts,Sodium (meta) arsenite (2 uM),3,1.48927915662246,0.7087,0.82,0.0042188300911245,0.507919004594139,False
+MSM0.22,N-Methyl-N-nitrosourea,350 uM,No,MNU,m_Alkylating Agent,MNU (350 uM),3,12.3576403931659,0.0,0.0,0.89005649838359,0.899468077462444,True
+MSM0.23,Acetaldehyde,0.9 mM,No,Acetaldehyde,n_Aldehydes,Acetaldehyde (0.9 mM),2,1.67915376787257,0.3954,0.6,0.07643834974169,0.07643834974169,False
+MSM0.24,N-Ethyl-N-nitrosourea,400 uM,No,ENU,m_Alkylating Agent,ENU (400 uM),3,29.6285523741471,0.0,0.0,0.968776342077416,0.972494355357179,True
+MSM0.25,Cyclophosphamide,18.75 uM,Yes,Cyclophosphamide,l_Drug Therapy,Cyclophosphamide (18.75 uM) + S9,2,2.07434599675079,0.0043,0.01,0.543485139001683,0.543485139001683,True
+MSM0.26,Benzo[a]pyrene,0.39 uM,Yes,BaP,f_PAH,BaP (0.39 uM) + S9,3,10.9416788716596,0.0,0.0,0.81101127412644,0.89277278487233,True
+MSM0.27,6-Nitrochrysene,12.5 uM,Yes,6-Nitrochrysene,e_Nitro-PAH,6-Nitrochrysene (12.5 uM) + S9,3,4.20913918944232,0.0,0.0,0.589848417110967,0.857166626066868,True
+MSM0.28,Nickel (II) chloride,300 uM,No,NiCl2,c_Metal Salts,Nickel (II) chloride (300 uM),2,1.27472481357435,0.1851,0.32,0.0,0.0,False
+MSM0.29,1-Nitropyrene,1.75 uM,Yes,1-Nitropyrene,e_Nitro-PAH,1-Nitropyrene (1.75 uM) + S9,2,2.21517951341576,0.1537,0.28,0.0,0.0,True
+MSM0.3,Aristolochic acid I,1.25 uM,No,AAI,b_Other,AAI (1.25 uM),3,4.02314163415457,0.0,0.0,0.964606685318255,0.971757418872652,True
+MSM0.30,Potassium chromate,7.5 uM,No,K2CrO4,c_Metal Salts,Potassium chromate (7.5 uM),2,1.22764479679591,0.1696,0.3,0.0049160345798201,0.0049160345798201,False
+MSM0.31,Styrene oxide,75 uM,No,Styrene oxide,b_Other,Styrene oxide (75 uM),3,2.7197256862987,0.058,0.12,0.275974171680285,0.464440464791475,True
+MSM0.32,Ellipticine,0.125 uM,No,Ellipticine,l_Drug Therapy,Ellipticine (0.125 uM),2,1.52290648616041,0.9966,1.0,0.0,0.0,False
+MSM0.33,Bleomycin,0.188 uM,No,Bleomycin,l_Drug Therapy,Bleomycin (0.188 uM),2,1.72848720981687,0.9011,0.95,0.0,0.0,False
+MSM0.34,Formaldehyde,85.5 uM,No,Formaldehyde,n_Aldehydes,Formaldehyde (85.5 uM),3,1.21034512143585,0.8764,0.94,0.0,0.0182993496210203,False
+MSM0.35,Potassium bromate,260 uM,No,Potassium bromate,d_ROS/NOS,Potassium bromate (260 uM),3,5.21781524504691,0.0,0.0,0.919162985583071,0.96050064933318,True
+MSM0.36,Lead (II) acetate,75 uM,No,Pb(C2H3O2)2,c_Metal Salts,Lead (II) acetate (75 uM),3,1.37923346826238,0.8149,0.89,0.0415029242199607,0.278654583178124,False
+MSM0.38,"1,4-Benzoquinone",5 uM,No,"1,4-Benzoquinone",b_Other,"1,4-Benzoquinone (5 uM)",2,2.44418711722808,0.978,1.0,0.0612451578142971,0.0612451578142971,True
+MSM0.39,Lead (II) nitrate,88 uM,No,Pb(NO3)2,c_Metal Salts,Lead (II) nitrate (88 uM),2,2.58893858144863,0.9802,1.0,0.269049700417571,0.269049700417571,True
+MSM0.40,6-Nitrochrysene,0.78 uM,No,6-Nitrochrysene,e_Nitro-PAH,6-Nitrochrysene (0.78 uM),3,7.51408449214762,0.0,0.0,0.942072865764447,0.957486256513421,True
+MSM0.41,Ellipticine,0.375 uM,Yes,Ellipticine,l_Drug Therapy,Ellipticine (0.375 uM) + S9,4,3.15255949978859,0.0,0.0,0.0,0.80039125363528,True
+MSM0.42,"Dibenz[a,h]anthracene",75 uM,Yes,DBA,f_PAH,DBA (75 uM) + S9,3,10.5477917909022,0.0,0.0,0.961542497891699,0.98653579015614,True
+MSM0.43,4-Aminobiphenyl,40 uM,Yes,4-ABP,j_Aromatic Amine,4-ABP (40 uM) + S9,2,1.93209659654131,0.9605,1.0,0.0,0.0,False
+MSM0.44,"2-amino-1-methyl-6-phenylimidazo[4,5-b]pyridine",3 uM,Yes,PhIP,i_Heterocyclic Amine,PhIP (3 uM) + S9,4,3.56544524785938,0.0,0.0,0.536849610842956,0.904835542639566,True
+MSM0.46,Cobalt (II) chloride,250 uM,No,CoCl2,c_Metal Salts,Cobalt (II) chloride (250 uM),2,2.12141791962647,0.7181,0.82,0.0,0.0,True
+MSM0.47,Methyl methanesulfonate,100 uM,No,MMS,m_Alkylating Agent,MMS (100 uM),2,2.28959305533327,0.5156,0.69,0.361853775784213,0.361853775784213,True
+MSM0.48,Camptothecin,0.0063 uM,No,Camptothecin,l_Drug Therapy,Camptothecin (0.0063 uM),2,1.88420043344374,0.5156,0.69,0.0,0.0,False
+MSM0.49,Aflatoxin B1,0.25 uM,Yes,AFB1,b_Other,AFB1 (0.25 uM) + S9,2,2.77068990607919,0.0,0.0,0.243487734790564,0.243487734790564,True
+MSM0.5,3-Nitrobenzanthrone,0.025 uM,No,3-NBA,e_Nitro-PAH,3-NBA (0.025 uM),3,6.25597924278842,0.0,0.0,0.663290052891966,0.696506123475063,True
+MSM0.50,"1,6-Dinitropyrene",0.09 uM,No,"1,6-DNP",e_Nitro-PAH,"1,6-DNP (0.09 uM)",3,5.79594659782783,0.0,0.0,0.630667174501952,0.819174222063476,True
+MSM0.51,Catechol,5.5 uM,No,Catechol,b_Other,Catechol (5.5 uM),2,2.06296424734732,0.8186,0.89,0.0,0.0,True
+MSM0.52,Acrylamide,9.5 mM,Yes,Acrylamide,b_Other,Acrylamide (9.5 mM) + S9,2,2.03061693410507,0.6279,0.8,0.0493180677756339,0.0493180677756339,True
+MSM0.53,Glycidamide,475 uM,No,GLY,b_Other,Glycidamide (475 uM),3,1.52141131859612,0.0433,0.09,0.0,0.236290685545705,False
+MSM0.54,5-Methylchrysene,1.6 uM,Yes,5-Methylchrysene,f_PAH,5-Methylchrysene (1.6 uM) + S9,3,16.8538779886559,0.0,0.0,0.976539433619992,0.979656296549421,True
+MSM0.55,Furan,100 mM,Yes,Furan,b_Other,Furan (100 mM) + S9,3,3.11138177814598,0.0003,0.0,0.239664632290716,0.606050444948793,True
+MSM0.56,Simulated solar radiation,1.25 J,No,SSR,h_Radiation,SSR (1.25 J),3,6.97937676679589,0.0,0.0,0.977228849031538,0.986761769558777,True
+MSM0.57,Acrolein,5 uM,No,Acrolein,b_Other,Acrolein (5 uM),2,2.44144410575668,0.6639,0.81,0.0,0.0,True
+MSM0.58,Aristolochic acid II,37.5 uM,No,AAII,b_Other,AAII (37.5 uM),3,2.72701564237576,0.0002,0.0,0.105166433108648,0.60542149167004,True
+MSM0.59,Olaparib,0.625 uM,No,Olaparib,l_Drug Therapy,Olaparib (0.625 uM),2,2.02464777874693,0.9966,1.0,0.0,0.0,True
+MSM0.60,o-Anisidine,0.85 mM,No,o-Anisidine,j_Aromatic Amine,o-Anisidine (0.85 mM),2,1.21355087986824,0.4324,0.62,0.0,0.0,False
+MSM0.61,"2-amino-3-methyl-9H-pyrido[2,3-b]indole",70 uM,No,MeAaC,i_Heterocyclic Amine,MeAaC (70 uM),2,1.31771641420997,0.4245,0.61,0.132521211353098,0.132521211353098,False
+MSM0.62,"2-amino-3-methylimidazo[4,5-f]quinoline",450 uM,No,IQ,i_Heterocyclic Amine,IQ (450 uM),2,2.19895211340825,0.1313,0.25,0.164087159592387,0.164087159592387,True
+MSM0.63,Propylene oxide,10 mM,No,Propylene oxide,b_Other,Propylene oxide (10 mM),3,13.6712329361824,0.0,0.0,0.861482821597994,0.937483473554128,True
+MSM0.64,N-Nitrosopyrrolidine,50 mM,No,N-Nitrosopyrrolidine,g_Nitrosamine,N-Nitrosopyrrolidine (50 mM),3,4.1652639483937,0.0002,0.0,0.506771376722538,0.564316573872911,True
+MSM0.65,"2-amino-3,8-dimethylimidazo[4,5-f]quinoxaline",300 uM,No,MeIQX,i_Heterocyclic Amine,MeIQX (300 uM),3,2.83965160356157,0.0979,0.19,0.244239133017608,0.481849563105755,True
+MSM0.66,Mechlorethamine (nitrogen mustard),0.3 uM,No,Mechlorethamine,l_Drug Therapy,Mechlorethamine (0.3 uM),3,4.42251898743202,0.0001,0.0,0.509600908000437,0.763572067521547,True
+MSM0.67,Diethyl sulfate,0.938 mM,No,DES,m_Alkylating Agent,DES (0.938 mM),3,6.69650190127083,0.0,0.0,0.739706033575907,0.839011576434823,True
+MSM0.68,Dimethyl sulfate,0.078 mM,No,DMS,m_Alkylating Agent,DMS (0.078 mM),3,5.46638061307972,0.0,0.0,0.491681366140638,0.672255918377889,True
+MSM0.69,o-Toluidine,14 mM,Yes,o-Toluidine,j_Aromatic Amine,o-Toluidine (14 mM) + S9,2,1.08317023472651,0.5416,0.71,0.0,0.0,False
+MSM0.7,Cisplatin,3.125 uM,No,Cisplatin,l_Drug Therapy,Cisplatin (3.125 uM),3,5.90816982846098,0.0,0.0,0.832788777628903,0.878835672328337,True
+MSM0.70,Ochratoxin A,0.08 uM,Yes,OTA,b_Other,OTA (0.08 uM) + S9,2,2.20373750067693,0.0043,0.01,0.646215143498522,0.646215143498522,True
+MSM0.71,Gamma irradiation,2 Gray,No,Gamma irradiation,h_Radiation,Gamma irradiation (2 Gray),2,2.47422706755646,0.5156,0.69,0.0434217642652673,0.0434217642652673,True
+MSM0.72,Carboplatin,5 uM,No,Carboplatin,l_Drug Therapy,Carboplatin (5 uM),3,4.57410999502526,0.0,0.0,0.731261476522504,0.821717852390646,True
+MSM0.73,Sudan I,20 uM,Yes,Sudan I,b_Other,Sudan I (20 uM) + S9,2,2.44170421869454,0.2613,0.43,0.0999312006288184,0.0999312006288184,True
+MSM0.74,"Dibenz(a,j)acridine",5 uM,Yes,DBAC,f_PAH,DBAC (5 uM) + S9,3,6.0274872910234,0.0,0.0,0.766162429314123,0.881807069174354,True
+MSM0.75,Temozolomide,200 uM,No,Temozolomide,l_Drug Therapy,Temozolomide (200 uM),2,12.0895569632627,0.0,0.0,0.932557222631737,0.932557222631737,True
+MSM0.80,o-Anisidine,6 mM,Yes,o-Anisidine,j_Aromatic Amine,o-Anisidine (6 mM) + S9,2,1.86185049594672,0.2376,0.39,0.0109791983250816,0.0109791983250816,False
+MSM0.81,2-Nitrotoluene,4.6 mM,Yes,2-Nitrotoluene,e_Nitro-PAH,2-Nitrotoluene (4.6 mM) + S9,2,2.07389134625573,0.7398,0.83,0.115046087635941,0.115046087635941,True
+MSM0.82,"7H-Dibenzo[c,g]carbazole",3.5 uM,Yes,DBC,f_PAH,DBC (3.5 uM) + S9,2,1.61890702431585,0.1737,0.31,0.0171061331924141,0.0171061331924141,False
+MSM0.83,Cisplatin,12.5 uM,No,Cisplatin,l_Drug Therapy,Cisplatin (12.5 uM),3,7.52550942007341,0.0,0.0,0.960764447400578,0.973986392040722,True
+MSM0.84,AZD7762,1.625 uM,No,AZD7762,k_DNA Damage Response Inhibitors,AZD7762 (1.625 uM),2,6.19557000017065,0.0,0.0,0.681560277792925,0.681560277792925,True
+MSM0.85,AZ20,0.9375 uM,No,AZ20,k_DNA Damage Response Inhibitors,AZ20 (0.9375 uM),2,1.4686512490382,0.4245,0.61,0.0724048910337618,0.0724048910337618,False
+MSM0.87,3-Nitrobenzanthrone,0.1 uM,No,3-NBA,e_Nitro-PAH,3-NBA (0.1 uM),3,5.66848033766237,0.0,0.0,0.884313903446543,0.94413338138611,True
+MSM0.88,Ellipticine,0.625 uM,Yes,Ellipticine,l_Drug Therapy,Ellipticine (0.625 uM) + S9,2,1.95536554961798,0.4113,0.61,0.0,0.0,False
+MSM0.89,Ellipticine,0.25 uM,No,Ellipticine,l_Drug Therapy,Ellipticine (0.25 uM),2,1.833965355156,0.3649,0.57,0.0,0.0,False
+MSM0.90,"2-amino-1-methyl-6-phenylimidazo[4,5-b]pyridine",4 uM,Yes,PhIP,i_Heterocyclic Amine,PhIP (4 uM) + S9,3,6.59144934521246,0.0,0.0,0.889822069900324,0.920651627637337,True
+MSM0.91,1-Nitropyrene,2.5  uM,Yes,1-Nitropyrene,e_Nitro-PAH,1-Nitropyrene (2.5  uM) + S9,2,2.21190709389377,0.6044,0.78,0.0,0.0,True
+MSM0.92,Benzo[a]pyrene,2 uM,Yes,BaP,f_PAH,BaP (2 uM) + S9,3,10.8789370516224,0.0,0.0,0.879419605197771,0.921455535632159,True
+MSM0.93,6-Nitrochrysene,50 uM,Yes,6-Nitrochrysene,e_Nitro-PAH,6-Nitrochrysene (50 uM) + S9,2,26.8048373847785,0.0,0.0,0.984217042886099,0.984217042886099,True
+MSM0.94,6-Nitrochrysene,50 uM,No,6-Nitrochrysene,e_Nitro-PAH,6-Nitrochrysene (50 uM),2,32.3116735156564,0.0,0.0,0.970930870333264,0.970930870333264,True
+MSM0.95,"1,8-Dinitropyrene",8 uM,No,"1,8-DNP",e_Nitro-PAH,"1,8-DNP (8 uM)",3,8.46938895161231,0.0,0.0,0.952536506269312,0.96252940647142,True
+MSM0.96,"Dibenzo[a,l]pyrene diol-epoxide",0.000625 uM,No,DBPDE,f_PAH,DBPDE (0.000625 uM),3,3.91439873894638,0.0,0.0,0.839601398124557,0.918494490932783,True
+MSM0.97,2-Nitrofluorene,40 uM,No,2-Nitrofluorene,e_Nitro-PAH,2-Nitrofluorene (40 uM),3,0.998045906250294,0.2817,0.45,0.0608449395130618,0.378089365235482,False
+MSM0.98,Nickel (II) chloride,412.5 uM,No,NiCl2,c_Metal Salts,Nickel (II) chloride (412.5 uM),2,2.03487806224367,0.7398,0.83,0.0,0.0,True
+MSM0.99,"1,2-Dimethylhydrazine",9 mM,No,DMH,m_Alkylating Agent,DMH (9 mM),2,1.81538141827666,0.3954,0.6,0.364576969366533,0.364576969366533,False
