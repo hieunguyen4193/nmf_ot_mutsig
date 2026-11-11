@@ -190,6 +190,60 @@ def refit_klnmf(X, S, n_iter=2000):
     return H
 
 
+# ***** HELPER FUNCTIONS FOR SIGPROFILEREXTRACTOR (SPE) *****
+def run_sigprofilerextractor(X, sample_names, k, outdir, args):
+    """Run the original SigProfilerExtractor (sigpro.sigProfilerExtractor) on X with the rank
+    fixed to k, then read back its suggested de novo solution.
+    Returns W (96 x k, sbs96 order, columns on the simplex), H (k x N, mutation counts),
+    the SPE signature names and the per-signature stability (SPE's analog of cohesion)."""
+    from SigProfilerExtractor import sigpro as sig
+    import glob
+
+    outdir = os.path.abspath(outdir)
+    os.makedirs(outdir, exist_ok=True)
+    # SPE "matrix" input: tab-separated text file, first column = mutation types
+    path_to_input = f"{outdir}/SPE_input_matrix.txt"
+    df = pd.DataFrame(np.rint(X).astype(int), index=sbs96, columns=sample_names)
+    df.index.name = "Mutation Types"
+    df.to_csv(path_to_input, sep="\t")
+    seeds = "random"
+    if args.SPE_seed is not None:
+        seeds = f"{outdir}/SPE_seeds.txt"
+        pd.DataFrame({"Seed": [args.SPE_seed]}).to_csv(seeds, sep="\t")
+
+    sig.sigProfilerExtractor("matrix", f"{outdir}/SPE_output", path_to_input,
+                             context_type="SBS96",
+                             minimum_signatures=k, maximum_signatures=k,
+                             nmf_replicates=args.SPE_replicates,
+                             seeds=seeds,
+                             cpu=args.SPE_cpu,
+                             make_decomposition_plots=False,
+                             make_dashboard=False)
+
+    # suggested de novo solution (with k fixed, this is the k-signature solution)
+    sol = f"{outdir}/SPE_output/SBS96/Suggested_Solution/SBS96_De-Novo_Solution"
+    sig_file = [f for f in glob.glob(f"{sol}/Signatures/*_Signatures.txt") if "SEM_Error" not in f][0]
+    act_files = [f for f in glob.glob(f"{sol}/Activities/*Activities*.txt") if "SEM_Error" not in f]
+    act_file = ([f for f in act_files if "Activities_refit" in f]
+                or [f for f in act_files if "Probabilities" not in f])[0]
+    W = pd.read_csv(sig_file, sep="\t", index_col=0).loc[sbs96]
+    W = W / W.sum(0)
+    names = list(W.columns)
+    H = pd.read_csv(act_file, sep="\t", index_col=0).T.loc[names, [str(s) for s in sample_names]]
+    print(f"SPE signatures: {sig_file}\nSPE activities: {act_file}")
+
+    # per-signature stability (average silhouette over the NMF replicates), if available
+    stability = np.full(len(names), np.nan)
+    stats = glob.glob(f"{outdir}/SPE_output/SBS96/All_Solutions/SBS96_{k}_Signatures/"
+                      f"Solution_Stats/*_Signatures_stats.txt")
+    if stats:
+        st = pd.read_csv(stats[0], sep="\t", index_col=0)
+        col = [c for c in st.columns if "Stabilit" in c]
+        if col and len(st) == len(names):
+            stability = st[col[0]].to_numpy(float)
+    return W.to_numpy(float), H.to_numpy(float), names, stability
+
+
 # ***** HELPER FUNCTIONS FOR PLOTTING *****
 SUB_COLORS = {"C>A": "#1EBFF0",
               "C>G": "#050708",
@@ -281,6 +335,17 @@ def add_arguments(parser):
     m.add_argument("--lambda-step-stop", dest="lambda_step_stop", type=float, default=5e-4)
     m.add_argument("--alpha", type=float, default=0.5)
     m.add_argument("--verbose", type=int, default=0)
+
+    # SigProfilerExtractor, run with the rank fixed to k
+    p = parser.add_argument_group("SigProfilerExtractor (SPE)")
+    p.add_argument("--skip-SPE", dest="skip_SPE", action="store_true",
+                   help="Do not run SigProfilerExtractor")
+    p.add_argument("--SPE-replicates", dest="SPE_replicates", type=int, default=100,
+                   help="Number of NMF replicates in SigProfilerExtractor")
+    p.add_argument("--SPE-seed", dest="SPE_seed", type=int, default=SEED,
+                   help="Root seed for SigProfilerExtractor")
+    p.add_argument("--SPE-cpu", dest="SPE_cpu", type=int, default=-1,
+                   help="CPUs for SigProfilerExtractor (-1 = all)")
     return parser
 
 def run(args):
@@ -356,6 +421,24 @@ def run(args):
             print(f"{name} cosine per true signature:", dict(zip(cosmic_sigs, cos.round(3))))
         print(f"{name} cluster cohesion:", cohesion.round(3))
 
+    # ***** SigProfilerExtractor: its own consensus signatures and activities (no refit here)
+    if not args.skip_SPE:
+        W_spe, H_spe, spe_names, stability = run_sigprofilerextractor(
+            X, sample_names, k, f"{path_to_save_output}/SigProfilerExtractor", args)
+        if W_true is None:
+            names = [f"SPE_{s}" for s in spe_names]
+            results["SPE"] = dict(medoids=W_spe, cohesion=stability, names=names, exposures=H_spe)
+        else:
+            idx, cos = match_signatures(W_true, W_spe)
+            curve = pd.DataFrame([confusion_at_cutoff(cos, W_spe.shape[1], t)
+                                  for t in np.round(np.arange(0.70, 1.0001, 0.01), 2)]).set_index("cutoff")
+            # SPE gives one consensus solution, no per-run signatures -> run_cos is NaN
+            results["SPE"] = dict(medoids=W_spe[:, idx], cos=cos, cohesion=stability[idx],
+                                  curve=curve, names=[f"SPE_{s}" for s in cosmic_sigs],
+                                  run_cos=np.full((1, k), np.nan), exposures=H_spe[idx])
+            print("SPE cosine per true signature:", dict(zip(cosmic_sigs, cos.round(3))))
+        print("SPE signature stability:", results["SPE"]["cohesion"].round(3))
+
     if W_true is not None:
         plt.figure(figsize=(5, 3.5))
         for name, res in results.items():
@@ -377,6 +460,11 @@ def run(args):
     pair_idx, pair_cos = match_signatures(wn["medoids"], kl["medoids"])
     pd.DataFrame(cosine_similarity(wn["medoids"], kl["medoids"]), index=wn["names"],
                  columns=kl["names"]).to_csv(f"{path_to_save_output}/cosine_matrix_WNMF_vs_KLNMF.csv")
+    spe = results.get("SPE")
+    if spe is not None:
+        spe_idx, spe_cos = match_signatures(wn["medoids"], spe["medoids"])
+        pd.DataFrame(cosine_similarity(wn["medoids"], spe["medoids"]), index=wn["names"],
+                     columns=spe["names"]).to_csv(f"{path_to_save_output}/cosine_matrix_WNMF_vs_SPE.csv")
     if W_true is not None:
         details, per_run = [], []
         for name, res in results.items():
@@ -399,11 +487,15 @@ def run(args):
         pd.DataFrame(details).to_csv(f"{path_to_save_output}/cosine_details.csv", index=False)
         pd.DataFrame(per_run).to_csv(f"{path_to_save_output}/cosine_per_run.csv", index=False)
     else:
-        pd.DataFrame(dict(
+        details = pd.DataFrame(dict(
             WNMF_signature=wn["names"], KLNMF_signature=[kl["names"][j] for j in pair_idx],
             cos_WNMF_vs_KLNMF=pair_cos, WNMF_cohesion=wn["cohesion"],
-            KLNMF_cohesion=kl["cohesion"][pair_idx])
-        ).to_csv(f"{path_to_save_output}/cosine_details.csv", index=False)
+            KLNMF_cohesion=kl["cohesion"][pair_idx]))
+        if spe is not None:
+            details["SPE_signature"] = [spe["names"][j] for j in spe_idx]
+            details["cos_WNMF_vs_SPE"] = spe_cos
+            details["SPE_stability"] = spe["cohesion"][spe_idx]
+        details.to_csv(f"{path_to_save_output}/cosine_details.csv", index=False)
 
     # ***** Refit to get the weight after getting the consensus signatures after N_RUNS
     refit = {"W-NMF": lambda S: refit_wnmf(X, S, M, gamma, rhoL, rhoD, options),
@@ -411,8 +503,9 @@ def run(args):
     expo_eval = {}
     for name, res in results.items():
         tag = name.replace("-", "")
-        H_est = refit[name](res["medoids"])
-        res["exposures"] = H_est
+        if name in refit:
+            res["exposures"] = refit[name](res["medoids"])
+        H_est = res["exposures"]     # SPE: activities as reported by SigProfilerExtractor
         # save the signature and weight matrix
         pd.DataFrame(res["medoids"], index=sbs96, columns=res["names"]
                      ).to_csv(f"{path_to_save_output}/{tag}_signatures.csv")
@@ -457,6 +550,9 @@ def run(args):
         # agreement between the two methods (same value for both columns)
         summary.loc["cos_WNMF_vs_KLNMF_mean"] = pair_cos.mean()
         summary.loc["cos_WNMF_vs_KLNMF_min"] = pair_cos.min()
+        if spe is not None:
+            summary.loc["cos_WNMF_vs_SPE_mean"] = spe_cos.mean()
+            summary.loc["cos_WNMF_vs_SPE_min"] = spe_cos.min()
     summary.index.name = "metric"
     print("Comparison summary:\n", summary.round(3))
     summary.to_csv(f"{path_to_save_output}/comparison_summary.csv")
@@ -482,6 +578,9 @@ def run(args):
             panels = [(wn["names"][i], wn["medoids"][:, i]),
                       (f"{kl['names'][idx[i]]}   cos to {wn['names'][i]} = {cos[i]:.3f}",
                        kl["medoids"][:, idx[i]])]
+            if spe is not None:
+                panels.append((f"{spe['names'][spe_idx[i]]}   cos to {wn['names'][i]} = {spe_cos[i]:.3f}",
+                               spe["medoids"][:, spe_idx[i]]))
             plot_sbs(panels, f"{sbs_dir}/{wn['names'][i]}.png")
     print(f"Results saved to {path_to_save_output}")
 

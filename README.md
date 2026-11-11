@@ -156,11 +156,53 @@ Written to `<outdir>/<runName>/`:
 | `sbs_plots/*.png` | SBS96 profile plots, one file per signature |
 | `X_simulated.csv`, `W_true.csv`, `H_true.csv` | simulated data and ground truth (simulation only) |
 | `cosine_to_true.csv`, `TPR_curve.png` | cosine of each matched medoid and TPR over cutoffs (simulation only) |
+| `TPR_curve.csv` | table behind `TPR_curve.png`: `method, cutoff, TP, FP, FN, precision, TPR, F1` (simulation only) |
 | `exposure_eval.csv` | exposure correlation and median relative error (simulation only) |
+| `comparison_summary.csv` | W-NMF vs KL-NMF metrics side by side, one row per metric (see below) |
+| `cosine_details.csv` | per-signature cosine details (see below) |
+| `cosine_per_run.csv` | cosine of every run's signature to its matched true signature: `method, run, true_signature, cosine` (simulation only) |
+| `cosine_matrix_WNMF_vs_true.csv`, `cosine_matrix_KLNMF_vs_true.csv` | full cosine matrix, true signatures × consensus signatures (simulation only) |
+| `cosine_matrix_WNMF_vs_KLNMF.csv` | full cosine matrix, W-NMF × KL-NMF consensus signatures |
 
 On simulated data, signatures are named `WNMF_<COSMIC>` / `KLNMF_<COSMIC>`
 after the true signature they are matched to; on real data they are
 `WNMF_sig1`, `WNMF_sig2`, ….
+
+#### `comparison_summary.csv`
+
+One column per method (`W-NMF`, `KL-NMF`), one row per metric.
+
+Both modes:
+
+- Cluster cohesion: `mean_cluster_cohesion`, `min_cluster_cohesion`
+- Cosine between each sample and its reconstruction `W H`: `recon_cos_mean`, `recon_cos_median`
+- Relative Frobenius error of the reconstruction, `‖X − W H‖ / ‖X‖`: `recon_rel_frobenius_err`
+
+Simulated data only:
+
+- Cosine of the consensus signatures to the true ones: `cos_to_true_mean`, `cos_to_true_median`, `cos_to_true_min`, `cos_to_true_max`
+- Cosine of each individual run to the truth (each run matched on its own): `run_cos_to_true_mean`, `run_cos_to_true_sd`
+- TPR at each cosine cutoff: `TPR_at_0.80`, `TPR_at_0.90`, `TPR_at_0.95`, `TPR_at_0.99`
+- Exposure correlation with the truth: `exposure_corr_mean`, `exposure_corr_min`
+- Median relative exposure error: `exposure_median_rel_err`
+
+Real data only:
+
+- Agreement between the W-NMF and KL-NMF signatures (Hungarian-matched):
+  `cos_WNMF_vs_KLNMF_mean`, `cos_WNMF_vs_KLNMF_min`. These measure one
+  method against the other, so both columns hold the same value.
+
+#### `cosine_details.csv`
+
+- Simulated data: one row per method × true signature, with
+  `consensus_signature`, `cos_consensus_to_true`, `cluster_cohesion`, the
+  spread over runs (`run_cos_mean`, `run_cos_sd`, `run_cos_min`,
+  `run_cos_median`, `run_cos_max`) and the fraction of runs reaching each
+  cutoff (`frac_runs_cos_ge_0.80`, `frac_runs_cos_ge_0.90`,
+  `frac_runs_cos_ge_0.95`).
+- Real data: one row per W-NMF signature, with `WNMF_signature`,
+  `KLNMF_signature` (its matched signature), `cos_WNMF_vs_KLNMF`,
+  `WNMF_cohesion` and `KLNMF_cohesion`.
 
 ## Notebooks
 
