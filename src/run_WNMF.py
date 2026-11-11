@@ -349,7 +349,10 @@ def run(args):
             medoids = medoids[:, idx]
             names = [f"{tag}_{s}" for s in cosmic_sigs]
             curve = pd.DataFrame(curve).set_index("cutoff")
-            results[name] = dict(medoids=medoids, cos=cos, cohesion=cohesion, curve=curve, names=names)
+            # per-run cosine: match each individual run to the truth (rows = runs, cols = true sigs)
+            run_cos = np.array([match_signatures(W_true, S_r)[1] for S_r in sig_runs])
+            results[name] = dict(medoids=medoids, cos=cos, cohesion=cohesion, curve=curve,
+                                 names=names, run_cos=run_cos)
             print(f"{name} cosine per true signature:", dict(zip(cosmic_sigs, cos.round(3))))
         print(f"{name} cluster cohesion:", cohesion.round(3))
 
@@ -362,6 +365,45 @@ def run(args):
         plt.tight_layout(); plt.savefig(f"{path_to_save_output}/TPR_curve.png", dpi=150); plt.close()
         pd.DataFrame({name: res["cos"] for name, res in results.items()},
                      index=cosmic_sigs).to_csv(f"{path_to_save_output}/cosine_to_true.csv")
+        # TPR curve as a table (long format: one row per method x cutoff)
+        pd.concat([res["curve"].reset_index().assign(method=name)
+                   for name, res in results.items()]
+                  )[["method", "cutoff", "TP", "FP", "FN", "precision", "TPR", "F1"]
+                  ].to_csv(f"{path_to_save_output}/TPR_curve.csv", index=False)
+
+    # ***** Detailed cosine similarity tables
+    wn, kl = results["W-NMF"], results["KL-NMF"]
+    # one-to-one pairing of the W-NMF and KL-NMF consensus signatures
+    pair_idx, pair_cos = match_signatures(wn["medoids"], kl["medoids"])
+    pd.DataFrame(cosine_similarity(wn["medoids"], kl["medoids"]), index=wn["names"],
+                 columns=kl["names"]).to_csv(f"{path_to_save_output}/cosine_matrix_WNMF_vs_KLNMF.csv")
+    if W_true is not None:
+        details, per_run = [], []
+        for name, res in results.items():
+            tag = name.replace("-", "")
+            # full cosine matrix: true signatures x consensus signatures
+            pd.DataFrame(cosine_similarity(W_true, res["medoids"]), index=cosmic_sigs,
+                         columns=res["names"]).to_csv(f"{path_to_save_output}/cosine_matrix_{tag}_vs_true.csv")
+            rc = res["run_cos"]
+            for i, sig in enumerate(cosmic_sigs):
+                details.append(dict(
+                    method=name, true_signature=sig, consensus_signature=res["names"][i],
+                    cos_consensus_to_true=res["cos"][i], cluster_cohesion=res["cohesion"][i],
+                    run_cos_mean=rc[:, i].mean(), run_cos_sd=rc[:, i].std(ddof=1) if len(rc) > 1 else 0.0,
+                    run_cos_min=rc[:, i].min(), run_cos_median=np.median(rc[:, i]),
+                    run_cos_max=rc[:, i].max(),
+                    **{f"frac_runs_cos_ge_{t:.2f}": (rc[:, i] >= t).mean() for t in (0.80, 0.90, 0.95)}))
+            for r in range(rc.shape[0]):
+                for i, sig in enumerate(cosmic_sigs):
+                    per_run.append(dict(method=name, run=r + 1, true_signature=sig, cosine=rc[r, i]))
+        pd.DataFrame(details).to_csv(f"{path_to_save_output}/cosine_details.csv", index=False)
+        pd.DataFrame(per_run).to_csv(f"{path_to_save_output}/cosine_per_run.csv", index=False)
+    else:
+        pd.DataFrame(dict(
+            WNMF_signature=wn["names"], KLNMF_signature=[kl["names"][j] for j in pair_idx],
+            cos_WNMF_vs_KLNMF=pair_cos, WNMF_cohesion=wn["cohesion"],
+            KLNMF_cohesion=kl["cohesion"][pair_idx])
+        ).to_csv(f"{path_to_save_output}/cosine_details.csv", index=False)
 
     # ***** Refit to get the weight after getting the consensus signatures after N_RUNS
     refit = {"W-NMF": lambda S: refit_wnmf(X, S, M, gamma, rhoL, rhoD, options),
@@ -385,6 +427,40 @@ def run(args):
         print("Exposure correlation with the truth:\n", expo_eval.round(3))
         expo_eval.to_csv(f"{path_to_save_output}/exposure_eval.csv")
 
+    # *****
+    # ***** save a summary table to compare the methods.
+    # *****
+    summary = {}
+    for name, res in results.items():
+        X_hat = res["medoids"] @ res["exposures"]
+        recon_cos = np.diag(cosine_similarity(X, X_hat))           
+        s = {"mean_cluster_cohesion": res["cohesion"].mean(),
+             "min_cluster_cohesion": res["cohesion"].min(),
+             "recon_cos_mean": recon_cos.mean(),
+             "recon_cos_median": np.median(recon_cos),
+             "recon_rel_frobenius_err": np.linalg.norm(X - X_hat) / np.linalg.norm(X)}
+        if W_true is not None:
+            s.update({"cos_to_true_mean": res["cos"].mean(),
+                      "cos_to_true_median": np.median(res["cos"]),
+                      "cos_to_true_min": res["cos"].min(),
+                      "cos_to_true_max": res["cos"].max(),
+                      "run_cos_to_true_mean": res["run_cos"].mean(),
+                      "run_cos_to_true_sd": res["run_cos"].std()})
+            for t in (0.80, 0.90, 0.95, 0.99):
+                s[f"TPR_at_{t:.2f}"] = confusion_at_cutoff(res["cos"], k, t)["TPR"]
+            corr = expo_eval.loc[name, cosmic_sigs].astype(float)
+            s.update({"exposure_corr_mean": corr.mean(), "exposure_corr_min": corr.min(),
+                      "exposure_median_rel_err": expo_eval.loc[name, "median_rel_err"]})
+        summary[name] = s
+    summary = pd.DataFrame(summary)
+    if W_true is None:
+        # agreement between the two methods (same value for both columns)
+        summary.loc["cos_WNMF_vs_KLNMF_mean"] = pair_cos.mean()
+        summary.loc["cos_WNMF_vs_KLNMF_min"] = pair_cos.min()
+    summary.index.name = "metric"
+    print("Comparison summary:\n", summary.round(3))
+    summary.to_csv(f"{path_to_save_output}/comparison_summary.csv")
+
     # ***** Plot MDS to see how N_RUNS signature are
     plot_mds({"W-NMF": runs_wnmf, "KL-NMF": runs_klnmf}, results,
              f"{path_to_save_output}/MDS_signatures.png", W_true=W_true, true_names=cosmic_sigs)
@@ -392,7 +468,6 @@ def run(args):
     # ***** SBS96 profile plots, one file per signature
     sbs_dir = f"{path_to_save_output}/sbs_plots"
     os.makedirs(sbs_dir, exist_ok=True)
-    wn, kl = results["W-NMF"], results["KL-NMF"]
     if W_true is not None:
         # true signature on top, then the medoid each method matched to it
         for i, sig in enumerate(cosmic_sigs):
@@ -402,7 +477,7 @@ def run(args):
             plot_sbs(panels, f"{sbs_dir}/{sig}.png")
     else:
         # no truth: pair each W-NMF signature with its best KL-NMF match (Hungarian on cosine)
-        idx, cos = match_signatures(wn["medoids"], kl["medoids"])
+        idx, cos = pair_idx, pair_cos
         for i in range(k):
             panels = [(wn["names"][i], wn["medoids"][:, i]),
                       (f"{kl['names'][idx[i]]}   cos to {wn['names'][i]} = {cos[i]:.3f}",
